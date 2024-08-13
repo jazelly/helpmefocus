@@ -1,3 +1,5 @@
+# Help me Focus
+
 Productivity Tool with AI Assistant
 
 ## Why
@@ -39,4 +41,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - Integrate cloud AI
 - Better TTS with support of `eleven-labs`
 - More content for your schedule, potentially a curated list of tasks to do.
-- deployment

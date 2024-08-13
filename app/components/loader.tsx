@@ -1,7 +1,7 @@
 import React from 'react';
 import { Cube } from '@phosphor-icons/react';
 
-export const CubeSpinner = ({ size, color }) => {
+export const CubeSpinner = ({ size, color }: { size: number; color: string}) => {
   return (
     <Cube color={color} weight="duotone" size={size}>
       <animate

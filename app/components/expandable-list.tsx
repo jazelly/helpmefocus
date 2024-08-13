@@ -1,7 +1,13 @@
-import { CaretCircleDown, CaretCircleLeft } from '@phosphor-icons/react';
-import React, { useState } from 'react';
+import { CaretCircleDown, CaretCircleLeft } from "@phosphor-icons/react";
+import React, { useState } from "react";
 
-const ExpandableMessageList = ({ label = 'Messages', messages }) => {
+const ExpandableMessageList = ({
+  label = "Messages",
+  messages,
+}: {
+  label: string;
+  messages: string[];
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpand = () => {
