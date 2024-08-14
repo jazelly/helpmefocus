@@ -11,8 +11,7 @@ const toneMap: Record<number, string> = {
   5: "harsh, strict, pushing, and negative",
 };
 
-const isLocal = process.env.ENV === "development";
-const model = loadModel({ type: isLocal ? "gguf" : "openai" });
+const model = loadModel({ type: process.env.MODEL_TYPE as any});
 
 const jsonFormatInstruction = `
 You must format your output as a JSON value that adheres to a given "JSON Schema" instance.
