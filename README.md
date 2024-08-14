@@ -38,6 +38,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## What's next
 
-- Integrate cloud AI
+- Integrate claude | mistral | grok | etc..
 - Better TTS with support of `eleven-labs`
 - More content for your schedule, potentially a curated list of tasks to do.

@@ -9,7 +9,7 @@ import { schedule } from "./service";
 const CountdownTimer = () => {
   const [time, setTime] = useState(0); // in seconds
   const [isActive, setIsActive] = useState(false);
-  const [inputMinutes, setInputMinutes] = useState("0");
+  const [inputMinutes, setInputMinutes] = useState("30");
   const [intervalMinutes, setIntervalMinutes] = useState("10");
   const [intervalId, setIntervalId] = useState(-1);
   const [scheduling, setScheduling] = useState(false);
@@ -44,7 +44,7 @@ const CountdownTimer = () => {
         prompt: prompt,
         toneLevel: 1,
       };
-
+      console.log('payload', payload);
       const response = await schedule(payload);
 
       console.log("Response data:", response);

@@ -9,18 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@langchain/openai": "^0.2.6",
     "@phosphor-icons/react": "^2.1.7",
     "axios": "^1.7.3",
+    "langchain": "^0.2.16",
     "next": "14.2.5",
     "node-llama-cpp": "^2.8.15",
     "react": "^18",
     "react-dom": "^18",
-    "react-hot-toast": "^2.4.1"
+    "react-hot-toast": "^2.4.1",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^10.0.0",
     "eslint": "^8.41.0",
     "eslint-config-next": "14.2.5",
     "eslint-config-prettier": "^9.1.0",
