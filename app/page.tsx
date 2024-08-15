@@ -4,7 +4,7 @@ import CountdownTimer from "@/components/CountdownTimer";
 export default function page() {
   return (
     <div>
-      <main className="flex min-h-screen flex-col justify-center items-center p-3">
+      <main className="flex flex-col min-h-screen items-center p-3">
         <CountdownTimer />
       </main>
     </div>

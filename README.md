@@ -4,10 +4,11 @@ Productivity Tool with AI Assistant
 
 ## Why
 
-I couldn't find anything handy to remind myself to focus on what I am doing, as I tend to mutli-tasking unintentionally, which is counter-productive and the result tends to be like, well, nothing gets accomplished.
+I couldn't find any app, or at least free app, to help myself focus. I personally tend to mutli-tasking unintentionally, which is counter-productive. 
+With a good 2-hour chunk for focusing, the result tends to be trivial.
 
-The goal of this tool is to make the use of LLM, and let it understand what you want to achieve during a certain period,
-so it can provide meaningful reminder within reasonable gaps. In that way, a user like me should be able to **focus** on a single task at one time.
+The goal of this tool is to make the use of LLM, and let it understand what you want to achieve during a certain period. The main idea is based on 
+[Timeblocking](https://en.wikipedia.org/wiki/Timeblocking), a productivity technique for time management.
 
 
 ## Getting Started
@@ -40,4 +41,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 - Integrate claude | mistral | grok | etc..
 - Better TTS with support of `eleven-labs`
-- More content for your schedule, potentially a curated list of tasks to do.
+- Schdule table with DND, auto connected with time chunks
+- More options of reminding, special sound effects for reminder

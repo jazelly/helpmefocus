@@ -4,6 +4,7 @@ import { LlamaChatSession, LlamaContext, LlamaModel } from "node-llama-cpp";
 import { v4 } from "uuid";
 import { HumanMessage, AIMessage, BaseMessage } from "@langchain/core/messages";
 import { StringOutputParser } from "@langchain/core/output_parsers";
+import { type ChatGeneration } from "@langchain/core/outputs";
 
 export class AbstractModel {
   type: ModelType;
@@ -11,7 +12,7 @@ export class AbstractModel {
     this.type = type;
   }
 
-  async prompt(question: string): Promise<string> {
+  async prompt<T>(question: string): Promise<T> {
     throw Error("do not call abstract class methods");
   }
 
@@ -20,10 +21,10 @@ export class AbstractModel {
    * @param question
    * @param session can be string or number, whatever is used to identify a session by different providers
    */
-  async promptSameSession(
+  async promptSameSession<T>(
     question: string,
-    session?: string | number
-  ): Promise<string> {
+    session?: string | number,
+  ): Promise<TemplateStringsArray> {
     throw Error("do not call abstract class methods");
   }
 }
@@ -40,26 +41,32 @@ export class GGUFModel extends AbstractModel {
     this.sessionMap = {};
   }
 
-  async #prompt(question: string, session: LlamaChatSession): Promise<string> {
+  async #prompt<T = string>(
+    question: string,
+    session: LlamaChatSession,
+  ): Promise<T> {
     const answer = await session.prompt(question, {
       maxTokens: this.context.getContextSize(),
     });
-    return answer;
+    return answer as unknown as T;
   }
 
-  async prompt(question: string): Promise<string> {
+  async prompt<T>(question: string): Promise<T> {
     const session = new LlamaChatSession({ context: this.context });
     this.sessionMap[v4()] = session;
     return this.#prompt(question, session);
   }
 
-  async promptSameSession(
+  async promptSameSession<T>(
     question: string,
-    session?: string | number
-  ): Promise<string> {
-    const sessionKey =  session || v4();
-    if (!this.sessionMap[sessionKey]) this.sessionMap[sessionKey] = new LlamaChatSession({ context: this.context });
-    const a = await this.#prompt(question, this.sessionMap[sessionKey]);
+    session?: string | number,
+  ): Promise<T> {
+    const sessionKey = session || v4();
+    if (!this.sessionMap[sessionKey])
+      this.sessionMap[sessionKey] = new LlamaChatSession({
+        context: this.context,
+      });
+    const a = await this.#prompt<T>(question, this.sessionMap[sessionKey]);
     return a;
   }
 }
@@ -73,22 +80,48 @@ export class OpenAIModel extends AbstractModel {
     this.sessionMap = {};
   }
 
-  async prompt(question: string): Promise<string> {
-    const chatHistory = []
+  async prompt<T>(question: string): Promise<T> {
+    const chatHistory = [];
     chatHistory.push(new HumanMessage(question));
     const answerRaw = await this.#model.invoke(chatHistory);
     const parser = new StringOutputParser();
     this.sessionMap[v4()] = chatHistory;
-    return parser.invoke(answerRaw);
+    const answer = (await parser.invoke(answerRaw)) as unknown as T;
+    return answer;
   }
 
-  async promptSameSession(question: string, session?: string | number): Promise<string> {
-    const sessionKey =  session || v4();
+  parseEscapedJson(escapedJsonString: string): {
+    answer: Record<string, any>;
+    source: string;
+  } {
+    // Remove the ```json\n prefix and \n``` suffix
+    let cleanedString = escapedJsonString
+      .replace("```json", "")
+      .replaceAll(/`/gm, "")
+      .replaceAll("\n", "");
+
+    console.log("cleanedString", cleanedString);
+    const result = JSON.parse(cleanedString);
+    return result;
+  }
+
+  async promptSameSession<T extends any>(
+    question: string,
+    session?: string | number,
+  ): Promise<T> {
+    const sessionKey = session || v4();
     const chatHistory = this.sessionMap[sessionKey] || [];
-    chatHistory.push(new HumanMessage(question))
-    const answerRaw = await this.#model.invoke(chatHistory);
+    chatHistory.push(new HumanMessage(question));
+    const answerRaw = await this.#model.generate([chatHistory]);
+    const tokenUsage = answerRaw.llmOutput?.tokenUsage ?? {};
+    const generation = answerRaw.generations[0][0] as ChatGeneration;
+    console.log("answerRaw - generation", generation);
+    const answer = this.parseEscapedJson(
+      generation.message.content as string,
+    ).answer;
+
+    chatHistory.push(new AIMessage(JSON.stringify(answer)));
     this.sessionMap[sessionKey] = chatHistory;
-    const parser = new StringOutputParser();
-    return parser.invoke(answerRaw);
+    return { answer, tokenUsage } as unknown as T;
   }
 }

@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "Usage" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "ip" TEXT NOT NULL,
+    "token" INTEGER NOT NULL,
+    "prompt" TEXT NOT NULL,
+    "answer" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

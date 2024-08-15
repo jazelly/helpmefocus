@@ -1,1 +1,1 @@
-export type ModelType = 'gguf' | 'openai';
+export type ModelType = "gguf" | "openai";
