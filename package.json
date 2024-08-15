@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write 'app/**/*.{ts,js}'"
+    "format": "prettier --write 'app/**/*.{ts,js}'",
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@langchain/openai": "^0.2.6",
