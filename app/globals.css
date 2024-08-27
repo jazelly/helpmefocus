@@ -31,3 +31,38 @@ body {
     text-wrap: balance;
   }
 }
+
+.timer-input {
+  padding: 0;
+  margin: 0;
+  font-size: 3rem;
+  letter-spacing: 0.15rem;
+  box-sizing: border-box; 
+  outline: none; /* Removes the default focus outline */
+  user-select: none;
+  box-shadow: none;
+  -webkit-user-select: none; /* For WebKit browsers */
+  -moz-user-select: none; /* For Firefox */
+  -ms-user-select: none; /* For Internet Explorer/Edge */
+}
+.timer-input:focus {
+  outline: none; /* Ensures no outline on focus */
+  box-shadow: none; /* Removes any shadow that might be added on focus */
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  15% { transform: translateX(-3px); }
+  30% { transform: translateX(0); }
+  42% { transform: translateX(3px); }
+  54% { transform: translateX(0); }
+  66% { transform: translateX(-3px); }
+  80% { transform: translateX(0); }
+  90% { transform: translateX(3px); }
+  100% { transform: translateX(0); }
+}
+
+/* Apply the animation to the error element */
+.shake {
+  animation: shake 0.3s ease; /* Adjust duration and timing as needed */
+}
