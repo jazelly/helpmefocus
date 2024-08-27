@@ -2,16 +2,27 @@
 
 Productivity Tool with AI Assistant
 
-## Why
+[Demo](https://helpmefocus.co)
 
-I couldn't find any app, or at least free app, to help myself focus. I personally tend to mutli-tasking unintentionally, which is counter-productive. 
-With a good 2-hour chunk for focusing, the result tends to be trivial.
+## What it is
 
-The goal of this tool is to make the use of LLM, and let it understand what you want to achieve during a certain period. The main idea is based on 
-[Timeblocking](https://en.wikipedia.org/wiki/Timeblocking), a productivity technique for time management.
+- It is a timer application based on the theory [Timeblocking](https://en.wikipedia.org/wiki/Timeblocking).
+- It is a supervisor reminding you of the goal for every x minutes.
 
+## What it is not
+
+- It is not a [Pomodoro](https://en.wikipedia.org/wiki/Pomodoro_Technique) timer.
+- It is not a schedule management tool
 
 ## Getting Started
+
+It currently supports LLM from Open AI API or any GGUF models.
+
+### Open AI
+
+Place the Open AI Key in `.env` by copying `.env.example`
+
+### GGUF
 
 First, download a GGUF model to run on your machine through [`huggingface-cli`](https://huggingface.co/docs/huggingface_hub/en/guides/cli)
 
@@ -39,7 +50,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## What's next
 
-- Integrate claude | mistral | grok | etc..
+- Better UI for reminder and more dynamic options for reminding intervals
 - Better TTS with support of `eleven-labs`
-- Schdule table with DND, auto connected with time chunks
 - More options of reminding, special sound effects for reminder
