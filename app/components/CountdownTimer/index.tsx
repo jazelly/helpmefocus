@@ -50,7 +50,6 @@ const CountdownTimer = ({ setLoading }) => {
     }
   }, [isActive, time]);
 
-  console.log(inputSeconds);
   const intervalMinutesNumber = parseInt(intervalMinutes);
   const handleStart = async () => {
     if (promptError) return;
@@ -70,10 +69,7 @@ const CountdownTimer = ({ setLoading }) => {
         prompt: prompt,
         toneLevel,
       };
-      console.log("payload", payload);
       const response = await schedule(payload);
-
-      console.log("Response data:", response);
 
       const remindMessages = response.data.remindMessages;
       if (Array.isArray(remindMessages))

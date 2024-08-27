@@ -171,8 +171,6 @@ export const DigitalTimer = ({
     };
   }, []);
 
-  console.log('hms', hours, minutes, seconds);
-
   if (editable) {
     displayedHours = hours;
     displayedMinutes = minutes;
