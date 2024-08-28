@@ -116,10 +116,11 @@ const CountdownTimer = () => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4 p-4 text-brown-1">
+    <div className="flex flex-col items-center space-y-4 p-4 text-brown-1 w-full h-full">
       <h1 className="text-3xl font-bold">Help me Focus</h1>
-      {scheduling && (
-        <div className="absolute flex flex-col items-center">
+      {// scheduling && 
+      (
+        <div className="absolute flex flex-col items-center justify-center w-full h-full z-20">
           <CubeSpinner color="black" size={30} />
           <span>Generating reminders</span>
         </div>
@@ -201,7 +202,7 @@ const CountdownTimer = () => {
             </button>
           </div>
           {
-            // isActive && remindMessages.length > 0 &&
+            isActive && remindMessages.length > 0 &&
             <div className="mt-3">
               <ExpandableMessageList
                 cursor={remindListIndex}
