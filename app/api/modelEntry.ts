@@ -81,7 +81,7 @@ export class OpenAIModel extends AbstractModel {
   }
 
   async prompt<T>(question: string): Promise<T> {
-    const chatHistory = [];
+    const chatHistory: HumanMessage[] = [];
     chatHistory.push(new HumanMessage(question));
     const answerRaw = await this.#model.invoke(chatHistory);
     const parser = new StringOutputParser();

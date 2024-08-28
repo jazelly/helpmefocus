@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect } from "react";
-import CountdownTimer from "@/components/CountdownTimer";
+import { Toaster } from "react-hot-toast";
+import { Main } from "./components/main";
 
 export default function page() {
   useEffect(() => {
@@ -18,8 +19,9 @@ export default function page() {
 
   return (
     <div className="w-full h-full">
-      <main className="flex flex-col items-center p-3">
-        <CountdownTimer />
+      <Toaster />
+      <main className="flex flex-col min-h-screen items-center p-3">
+        <Main />
       </main>
     </div>
   );
