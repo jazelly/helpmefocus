@@ -52,13 +52,15 @@ export async function POST(
     const { answer, tokenUsage } = await scheduleReminder(question);
 
     // track traffic
-    const ip = req.ip || req.headers.get("X-Forwarded-For") || "unknown";
-    await addUsage({
-      ip,
-      token: tokenUsage.totalTokens,
-      question,
-      answerList: answer,
-    });
+    if (process.env.PERSIST_DATA !== '0') {
+      const ip = req.ip || req.headers.get("X-Forwarded-For") || "unknown";
+      await addUsage({
+        ip,
+        token: tokenUsage.totalTokens,
+        question,
+        answerList: answer,
+      });
+    } 
 
     let messageList: string[] = [];
     if (Array.isArray(answer)) {
@@ -68,7 +70,6 @@ export async function POST(
         messageList.push(v as string);
       }
     }
-    console.log('for client resp', messageList)
     return NextResponse.json({ remindMessages: messageList }, { status: 200 });
   } catch (err) {
     return handleErrorResponse(err);
