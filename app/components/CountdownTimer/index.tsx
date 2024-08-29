@@ -9,7 +9,8 @@ import { toneOptions } from "@/utils/tone";
 import Select from "react-select";
 import { DigitalTimer } from "./digital-timer";
 import { formatTime } from "@/utils/time";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
+import { BellSimpleRinging, Question } from "@phosphor-icons/react";
 
 const CountdownTimer = ({ setLoading }) => {
   const [time, setTime] = useState(0); // in seconds
@@ -58,10 +59,8 @@ const CountdownTimer = ({ setLoading }) => {
 
     setLoading(true);
     try {
-      if (inputSeconds <= 0)
-        throw Error("Invalid focus time");
-      if (intervalMinutesNumber <= 0)
-        throw Error("Invalid reminder interval");
+      if (inputSeconds <= 0) throw Error("Invalid focus time");
+      if (intervalMinutesNumber <= 0) throw Error("Invalid reminder interval");
 
       const payload = {
         intervalMinutes: intervalMinutesNumber,
@@ -88,7 +87,6 @@ const CountdownTimer = ({ setLoading }) => {
       setIntervalId(interval as any as number);
     } catch (err: any) {
       toast.error(err.message);
-
     } finally {
       setLoading(false);
     }
@@ -107,9 +105,12 @@ const CountdownTimer = ({ setLoading }) => {
 
   return (
     <>
-      <div className={`flex flex-col items-center space-y-4 p-4 text-brown-1`}>
-        <div className="flex flex-col items-center space-y-4 p-4">
-          <div id="clock-area" className="flex flex-col justify-center items-center">
+      <div className={`flex flex-col items-center text-brown-1`}>
+        <div className="flex flex-col items-center w-full mt-12">
+          <div
+            id="clock-area"
+            className="flex flex-col justify-center items-center"
+          >
             <DigitalTimer
               initialHours={hms.hours}
               initialMinutes={hms.minutes}
@@ -118,18 +119,21 @@ const CountdownTimer = ({ setLoading }) => {
               onChange={setInputSeconds}
             />
           </div>
-          <div className="flex flex-col items-stretch">
-            <div className="flex space-x-2 w-full items-center mt-3">
-              <label className="min-w-32">Remind interval:</label>
-              <Input
-                value={intervalMinutes}
-                onChange={(e) => {
-                  setIntervalMinutes(e.target.value);
-                }}
-                placeholder="Enter interval"
-                className="w-16"
-              />
-              <span>mins</span>
+          <div className="flex flex-col items-stretch mt-8">
+            <div className="flex space-x-2 w-full justify-between items-center mt-3">
+              <div className="flex items-center space-x-1">
+                <BellSimpleRinging size={32} color="#f9fd12" weight="fill" />
+                <Input
+                  value={intervalMinutes}
+                  onChange={(e) => {
+                    setIntervalMinutes(e.target.value);
+                  }}
+                  placeholder="Enter interval"
+                  className="w-12"
+                />
+                <span>mins</span>
+              </div>
+              <Question size={20} color="#ececda" weight="bold" />
             </div>
 
             <div className="mt-2">
@@ -154,7 +158,7 @@ const CountdownTimer = ({ setLoading }) => {
                   setPrompt(e.target.value);
                 }}
                 placeholder="In a few words, describe what you want to achieve"
-                className={`w-full border ${promptError ? "border-red-500" : "border-gray-300"} rounded-lg p-2 h-[300px] resize-none focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                className={`w-full border ${promptError ? "border-red-500" : "border-gray-300"} rounded p-2 h-[300px] resize-none focus:outline-none focus:ring-2 focus:ring-blue-500`}
               />
               {promptError && (
                 <div className="text-sm text-red-500">{promptError}</div>
@@ -164,8 +168,8 @@ const CountdownTimer = ({ setLoading }) => {
             <div className="flex justify-around">
               <button
                 className={`
-                ${isActive ? "bg-[#6F777B]" : "bg-[#3D82AE] transition ease-in-out duration-150 focus:ring-blue-500 focus:ring-offset-2 hover:bg-blue-700 focus:outline-none focus:ring-2"}
-                px-12 py-1 bg-[#3D82AE] text-white font-semibold rounded-lg shadow-md 
+                ${isActive ? "bg-[#e64343]" : "bg-[#e64343] transition ease-in-out duration-150 focus:ring-blue-500 focus:ring-offset-2 hover:bg-[e64345] focus:outline-none focus:ring-2"}
+                px-12 py-1 text-white font-semibold rounded-lg shadow-md 
               `}
                 onClick={handleStart}
                 disabled={isActive}
@@ -173,14 +177,14 @@ const CountdownTimer = ({ setLoading }) => {
                 Start
               </button>
               <button
-                className="px-12 py-1 bg-[#afd4e0] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                className="px-12 py-1 bg-[#ffbdbd] text-white font-semibold rounded-lg shadow-md hover:bg-[#e68383] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-150"
                 onClick={handleReset}
               >
                 Reset
               </button>
             </div>
             {isActive && remindMessages.length > 0 && (
-              <div className="mt-3 w-full">
+              <div className="mt-3 mb-8 w-full">
                 <ExpandableMessageList
                   cursor={remindListIndex}
                   label="Preview reminders"

@@ -1,13 +1,8 @@
-import { LlamaModel } from "node-llama-cpp";
 import path from "path";
 import fs from "fs";
-import { fileURLToPath } from "url";
 import { ModelType } from "@/types/common";
 import { AbstractModel, GGUFModel, OpenAIModel } from "./modelFacade";
 import { getRootDir } from "./path";
-
-const MODEL_DIR = path.join(getRootDir(), "models");
-console.log(MODEL_DIR);
 
 const loadGGUFModels = (baseDir: string) => {
   const results: Record<string, string> = {};
@@ -39,12 +34,15 @@ const loadGGUFModels = (baseDir: string) => {
 interface LoadModelOptions {
   type: ModelType;
 }
-export const loadModel = ({ type }: LoadModelOptions) => {
+export const loadModel = async ({ type }: LoadModelOptions) => {
   let model: AbstractModel | undefined;
   switch (type) {
     case "gguf":
       if (process.env.ENV !== "development")
         throw Error("must use gguf model in local");
+
+      const { LlamaModel } = await import("node-llama-cpp");
+      const MODEL_DIR = path.join(getRootDir(), "models");
       const ggufModels = loadGGUFModels(MODEL_DIR);
       // we choose the first gguf model searched in path for now
       // GGUF is only available on local
@@ -55,9 +53,10 @@ export const loadModel = ({ type }: LoadModelOptions) => {
         model = new GGUFModel(
           new LlamaModel({
             modelPath: ggufModel,
-          }),
+          })
         );
       }
+
       break;
     case "openai":
       model = new OpenAIModel("gpt-4o-mini");

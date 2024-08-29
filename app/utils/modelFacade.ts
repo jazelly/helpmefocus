@@ -1,6 +1,5 @@
 import { ModelType } from "@/types/common";
 import { ChatOpenAI } from "@langchain/openai";
-import { LlamaChatSession, LlamaContext, LlamaModel } from "node-llama-cpp";
 import { v4 } from "uuid";
 import { HumanMessage, AIMessage, BaseMessage } from "@langchain/core/messages";
 import { StringOutputParser } from "@langchain/core/output_parsers";
@@ -30,45 +29,45 @@ export class AbstractModel {
 }
 
 export class GGUFModel extends AbstractModel {
-  #ggufModel: LlamaModel;
-  context: LlamaContext;
-  readonly sessionMap: Record<string, LlamaChatSession>;
+  #ggufModel;
+  // context: LlamaContext;
+  // readonly sessionMap: Record<string, LlamaChatSession>;
 
-  constructor(model: LlamaModel) {
+  constructor(model) {
     super("gguf");
     this.#ggufModel = model;
-    this.context = new LlamaContext({ model: this.#ggufModel });
-    this.sessionMap = {};
+    // this.context = new LlamaContext({ model: this.#ggufModel });
+    // this.sessionMap = {};
   }
 
-  async #prompt<T = string>(
-    question: string,
-    session: LlamaChatSession,
-  ): Promise<T> {
-    const answer = await session.prompt(question, {
-      maxTokens: this.context.getContextSize(),
-    });
-    return answer as unknown as T;
-  }
+  // async #prompt<T = string>(
+  //   question: string,
+  //   session: LlamaChatSession,
+  // ): Promise<T> {
+  //   const answer = await session.prompt(question, {
+  //     maxTokens: this.context.getContextSize(),
+  //   });
+  //   return answer as unknown as T;
+  // }
 
-  async prompt<T>(question: string): Promise<T> {
-    const session = new LlamaChatSession({ context: this.context });
-    this.sessionMap[v4()] = session;
-    return this.#prompt(question, session);
-  }
+  // async prompt<T>(question: string): Promise<T> {
+  //   const session = new LlamaChatSession({ context: this.context });
+  //   this.sessionMap[v4()] = session;
+  //   return this.#prompt(question, session);
+  // }
 
-  async promptSameSession<T>(
-    question: string,
-    session?: string | number,
-  ): Promise<T> {
-    const sessionKey = session || v4();
-    if (!this.sessionMap[sessionKey])
-      this.sessionMap[sessionKey] = new LlamaChatSession({
-        context: this.context,
-      });
-    const a = await this.#prompt<T>(question, this.sessionMap[sessionKey]);
-    return a;
-  }
+  // async promptSameSession<T>(
+  //   question: string,
+  //   session?: string | number,
+  // ): Promise<T> {
+  //   const sessionKey = session || v4();
+  //   if (!this.sessionMap[sessionKey])
+  //     this.sessionMap[sessionKey] = new LlamaChatSession({
+  //       context: this.context,
+  //     });
+  //   const a = await this.#prompt<T>(question, this.sessionMap[sessionKey]);
+  //   return a;
+  // }
 }
 
 export class OpenAIModel extends AbstractModel {

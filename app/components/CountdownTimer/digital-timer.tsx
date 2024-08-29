@@ -78,8 +78,8 @@ export const DigitalTimer = ({
       }
       let inputChar = value[pValue];
       inputChar = inputChar.replace(/[^0-9]/g, ""); // Allow only numbers
-      console.log('diff', inputChar);
-      console.log('inputBuffer', inputBuffer);
+
+      if (!inputChar) return;
       // handle throttle-like input
       const now = Date.now();
       if (inputBuffer.length === 0) {
@@ -189,7 +189,7 @@ export const DigitalTimer = ({
         }}
         onInput={handleInput}
         className={`timer-input py-0 rounded w-20 text-center 
-            ${focused === "hours" ? "bg-[#e25418]" : "bg-[#C15C5C]"} 
+            ${focused === "hours" ? "bg-[#eca838]" : "bg-[#C15C5C]"} 
             ${focused === "hours" && error !== "" ? "shake" : ""}  
             cursor-default text-white`}
         style={{ caretColor: "transparent" }}
@@ -211,7 +211,7 @@ export const DigitalTimer = ({
         }}
         onInput={handleInput}
         className={`timer-input rounded w-20 text-center 
-            ${focused === "minutes" ? "bg-[#e25418]" : "bg-[#C15C5C]"} 
+            ${focused === "minutes" ? "bg-[#eca838]" : "bg-[#C15C5C]"} 
             ${focused === "minutes" && error !== "" ? "shake" : ""}  
             cursor-default text-white`}
         style={{ caretColor: "transparent" }}
@@ -233,7 +233,7 @@ export const DigitalTimer = ({
         }}
         onInput={handleInput}
         className={`timer-input rounded w-20 text-center 
-          ${focused === "seconds" ? "bg-[#e25418]" : "bg-[#C15C5C]"} 
+          ${focused === "seconds" ? "bg-[#eca838]" : "bg-[#C15C5C]"} 
           ${focused === "seconds" && error !== "" ? "shake" : ""}  
           cursor-default text-white`}
         style={{ caretColor: "transparent" }}

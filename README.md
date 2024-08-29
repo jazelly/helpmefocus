@@ -6,7 +6,7 @@ Productivity Tool with AI Assistant
 
 ## What it is
 
-- It is a timer application based on the theory [Timeblocking](https://en.wikipedia.org/wiki/Timeblocking).
+- It is a timer application inspired by the theory [Timeblocking](https://en.wikipedia.org/wiki/Timeblocking).
 - It is a supervisor reminding you of the goal for every x minutes.
 
 ## What it is not

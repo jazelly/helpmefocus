@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-export const CountdownAnimatedTimer = ({ initialTime }: { initialTime: number}) => {
+export const CountdownAnimatedTimer = ({
+  initialTime,
+}: {
+  initialTime: number;
+}) => {
   const [timeLeft, setTimeLeft] = useState(initialTime);
   const [isRunning, setIsRunning] = useState(false);
 
@@ -27,7 +31,7 @@ export const CountdownAnimatedTimer = ({ initialTime }: { initialTime: number}) 
     const hours = Math.floor(timeLeft / 3600);
     const minutes = Math.floor((timeLeft % 3600) / 60);
     const seconds = timeLeft % 60;
-    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
 
   const getCircleProgress = () => {
@@ -55,7 +59,7 @@ export const CountdownAnimatedTimer = ({ initialTime }: { initialTime: number}) 
             fill="none"
             strokeDasharray="283"
             strokeDashoffset={getCircleProgress()}
-            style={{ transition: 'stroke-dashoffset 1s linear' }}
+            style={{ transition: "stroke-dashoffset 1s linear" }}
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
@@ -69,18 +73,21 @@ export const CountdownAnimatedTimer = ({ initialTime }: { initialTime: number}) 
         >
           Start
         </button>
-        <button
-          onClick={stopTimer}
-          className="bg-red-500 text-white px-4 py-2 rounded mr-2"
-        >
-          Stop
-        </button>
-        <button
-          onClick={resetTimer}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Reset
-        </button>
+        {isRunning ? (
+          <button
+            onClick={stopTimer}
+            className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+          >
+            Stop
+          </button>
+        ) : (
+          <button
+            onClick={resetTimer}
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+          >
+            Reset
+          </button>
+        )}
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ export interface ScheduleReminderLLMResult {
       totalTokens: number;
     };
   }
-const model = loadModel({ type: process.env.MODEL_TYPE as any }) as OpenAIModel;
+const model = await loadModel({ type: process.env.MODEL_TYPE as any }) as OpenAIModel;
 export const scheduleReminder = async (
     q: string,
   ): Promise<ScheduleReminderLLMResult> => {

@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <SpeedInsights />
       <Analytics />
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} bg-[#f6a9a9]`}>{children}</body>
     </html>
   );
 }
